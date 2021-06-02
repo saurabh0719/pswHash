@@ -1,16 +1,18 @@
-package pHash 
+package pswHash
 
 import (
 	"fmt"
 	"strings"
 	"strconv"
 	"crypto/sha256"
+	"crypto/rand"
 	"golang.org/x/crypto/pbkdf2"
 	"crypto/subtle"
 	b64 "encoding/base64"
 )
 
 var default_iterations int = 320000 // Default 
+var default_salt_length int = 12
 
 type decoded_hash struct {
 	algorithm string 
@@ -19,6 +21,7 @@ type decoded_hash struct {
 	salt string
 }
 
+// Mask all bits after the first 6 with *
 func mask_hash(hash string) string {
 
 	mask := []rune(hash)
@@ -29,10 +32,29 @@ func mask_hash(hash string) string {
 	return string(mask)
 }
 
+// Generate a random salt of given length
 func Salt(length int) []byte {
-	return []byte("hello")
+
+	var salt_len int
+
+	if length <= 0 {
+		salt_len = default_salt_length
+	} else {
+		salt_len = length
+	}
+
+	var salt = make([]byte, salt_len)
+
+	_, err := rand.Read(salt[:])
+
+	if err != nil {
+		panic(err)
+	}
+
+	return salt
 }
 
+// Generate the encoded string for the given password and salt
 func Encode(password string, salt []byte, iterations int) (string, error) {
 	
 	var itr int
@@ -53,13 +75,14 @@ func Encode(password string, salt []byte, iterations int) (string, error) {
 	 
 }
 
+// Decode the previously Encoded String and return a struct of type decoded_hash
 func Decode(encoded string) *decoded_hash {
 
 	split := strings.Split(encoded, "$")
 	itr, err := strconv.Atoi(split[1])
 
 	if err != nil {
-		fmt.Println("Some error occured")
+		panic(err)
 	}
 	
 	decoded := decoded_hash{
@@ -74,7 +97,7 @@ func Decode(encoded string) *decoded_hash {
 	
 }
 
-
+// Verify if the given password generates the same encoded string
 func Verify(password string, encoded string) int {
 
 	var decoded = Decode(encoded)
@@ -82,13 +105,14 @@ func Verify(password string, encoded string) int {
 	var new_encoded, err = Encode(password, []byte(decoded.salt), decoded.iterations)
 
 	if err != nil {
-		return 0
+		panic(err)
 	}
 
 	return subtle.ConstantTimeCompare([]byte(encoded), []byte(new_encoded))
 
 }
 
+// A safe view of the encoded string
 func SafeView(encoded string) (map[string]string) {
 
 	var decoded = Decode(encoded)

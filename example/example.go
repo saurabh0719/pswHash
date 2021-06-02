@@ -2,26 +2,26 @@ package main
 
 import (
 	"fmt"
-	"github.com/saurabh0719/pHash"
+	"github.com/saurabh0719/pswHash"
 )
 
 // Example code
 
 func main() {
 
-	str, err := pHash.Encode("somerandompassword", []byte("somerandomsalt"), 216000)
+	str, err := pswHash.Encode("somerandompassword", []byte("somerandomsalt"), 216000)
 
 	if err != nil {
 		fmt.Println("Some error occured")
 	}
 
 	fmt.Println(str)
-	fmt.Println(pHash.SafeView(str))
+	fmt.Println(pswHash.SafeView(str))
 
-	fmt.Println(pHash.Verify("somepassword", str))
+	fmt.Println(pswHash.Verify("somepassword", str))
 	// 0
 
-	fmt.Println(pHash.Verify("somerandompassword", str))
+	fmt.Println(pswHash.Verify("somerandompassword", str))
 	// 1
 
 }

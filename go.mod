@@ -1,4 +1,4 @@
-module github.com/saurabh0719/pHash
+module github.com/saurabh0719/pswHash
 
 go 1.16
 

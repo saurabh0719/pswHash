@@ -1,10 +1,12 @@
-# pHash
+# pswHash
 
-`pHash` is a simple Go password hashing module. This module uses the `pbkdf2` algorithm along with a `sha256` digest. It is a one-way hash.
+`pswHash` is a simple Go password hashing module. This module uses the `pbkdf2` algorithm along with a `sha256` digest. It is a one-way hash.
 
 ```sh
-$ go get github.com/saurabh0719/pHash@v0.1.0
+$ go get github.com/saurabh0719/pswHash
 ```
+
+Latest - `v0.1.1`
 
 Apart from being a good password hasher, since it follows the exact same schematics the [default password hasher](https://docs.djangoproject.com/en/3.2/topics/auth/passwords/) in python's Django framework, it can be used to verify passwords when moving to a Go backend but with the same old database from Django.
 
@@ -20,7 +22,7 @@ Read the `example.go` file in the Example folder of this repository for a clear 
 func Encode(password string, salt []byte, iterations int) (string, error)
 ```
 
-Returns a string in the format of `<algorithm>$<iterations>$<salt>$<hash>`. Here `<algorithm>` is `pbkdf2_sha256` and the number of iterations is `320000` by default.
+Returns an `encoded` string in the format of `<algorithm>$<iterations>$<salt>$<hash>`. Here `<algorithm>` is `pbkdf2_sha256` and the number of iterations is `320000` by default.
 
 ### 2. Decode
 
@@ -65,6 +67,15 @@ m["salt"] = mask_hash(decoded.salt)
 m["hash"] = mask_hash(decoded.hash)
 
 ```
+
+### 5. Salt 
+
+```go
+func Salt(length int) []byte
+```
+Returns a Salt of specific length.
+
+<hr>
 
 
  
