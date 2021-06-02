@@ -2,7 +2,13 @@
 
 `pHash` is a simple Go password hashing module. This module uses the `pbkdf2` algorithm along with a `sha256` digest. It is a one-way hash.
 
+```sh
+$ go get github.com/saurabh0719/pHash@v0.1.0
+```
+
 Apart from being a good password hasher, since it follows the exact same schematics the [default password hasher](https://docs.djangoproject.com/en/3.2/topics/auth/passwords/) in python's Django framework, it can be used to verify passwords when moving to a Go backend but with the same old database from Django.
+
+Read the `example.go` file in the Example folder of this repository for a clear understanding.
 
 <hr>
 
@@ -59,8 +65,6 @@ m["salt"] = mask_hash(decoded.salt)
 m["hash"] = mask_hash(decoded.hash)
 
 ```
-
-Read the `example.go` file in the Example folder of this repository for a clear understanding.
 
 
  
