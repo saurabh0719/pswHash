@@ -1,7 +1,6 @@
 package pswHash
 
 import (
-	"fmt"
 	"strings"
 	"strconv"
 	"crypto/sha256"
