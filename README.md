@@ -60,6 +60,7 @@ m["hash"] = mask_hash(decoded.hash)
 
 ```
 
-Read the `example.go` file in the root of this repository for a clear understanding.
+Read the `example.go` file in the Example folder of this repository for a clear understanding.
 
 
+ 

@@ -1,4 +1,4 @@
-module github.com/saurabh0719
+module github.com/saurabh0719/pHash
 
 go 1.16
 
