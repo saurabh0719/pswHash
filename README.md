@@ -8,7 +8,7 @@ $ go get github.com/saurabh0719/pswHash
 
 Latest - `v1.0.0`
 
-Apart from being a good password hasher, since it follows the exact same schematics the [default password hasher](https://docs.djangoproject.com/en/3.2/topics/auth/passwords/) in python's Django framework, it can be used to verify passwords when moving to a Go backend but with the same old database from Django.
+Since it follows the exact same schematics the [default password hasher](https://docs.djangoproject.com/en/3.2/topics/auth/passwords/) in python's Django framework, it can be used to verify passwords when moving to a Go backend but with the same old database from Django.
 
 Read the `example.go` file in the Example folder of this repository for a clear understanding.
 
