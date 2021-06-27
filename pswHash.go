@@ -21,8 +21,8 @@ import (
 	"strings"
 )
 
-var defaultIterations int = 320000 // Default
-var defaultSaltLength int = 12
+const defaultIterations int = 320000 // Default
+const defaultSaltLength int = 12
 
 type DecodedHash struct {
 	algorithm  string
