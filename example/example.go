@@ -9,20 +9,16 @@ import (
 
 func main() {
 
-	str, err := pswHash.Encode("somerandompassword", []byte("somerandomsalt"), 216000)
-
-	if err != nil {
-		fmt.Println("Some error occured")
-	}
+	str := pswHash.Encode("somerandompassword", []byte("somerandomsalt"), 216000)
 
 	fmt.Println(str)
 	fmt.Println(pswHash.SafeView(str))
 
 	fmt.Println(pswHash.Verify("somepassword", str))
-	// 0
+	// false
 
 	fmt.Println(pswHash.Verify("somerandompassword", str))
-	// 1
+	// true
 
 }
 
