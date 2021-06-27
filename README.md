@@ -6,7 +6,7 @@
 $ go get github.com/saurabh0719/pswHash
 ```
 
-Latest - `v1.0.0`
+Latest - `v1.0.1`
 
 Since it follows the exact same schematics the [default password hasher](https://docs.djangoproject.com/en/3.2/topics/auth/passwords/) in python's Django framework, it can be used to verify passwords when moving to a Go backend but with the same old database from Django.
 
@@ -19,7 +19,7 @@ Read the `example.go` file in the Example folder of this repository for a clear 
 ### 1. Encode
 
 ```go
-func Encode(password string, salt []byte, iterations int) (string, error)
+func Encode(password string, salt []byte, iterations int) string
 ```
 
 Returns an `encoded` string in the format of `<algorithm>$<iterations>$<salt>$<hash>`. Here `<algorithm>` is `pbkdf2_sha256` and the number of iterations is `320000` by default.
@@ -27,17 +27,17 @@ Returns an `encoded` string in the format of `<algorithm>$<iterations>$<salt>$<h
 ### 2. Decode
 
 ```go
-func Decode(encoded string) *decoded_hash
+func Decode(encoded string) *DecodedHash
 ```
-Where `decoded_hash` is a struct of the form :
+Where `DecodedHash` is a struct of the form :
 
 ```go
 
-type decoded_hash struct {
-	algorithm string 
-	hash string
+type DecodedHash struct {
+	algorithm  string
+	hash       string
 	iterations int
-	salt string
+	salt       string
 }
 
 ```
@@ -45,35 +45,37 @@ type decoded_hash struct {
 ### 3. Verify 
 
 ```go
-func Verify(password string, encoded string) int
+func Verify(password string, encoded string) bool
 ```
 
-Returns `1` if they match, else `0`. Uses `subtle.ConstantTimeCompare`.
+Returns `true` if they match, else `false`. Uses `subtle.ConstantTimeCompare`.
 
 ### 4. SafeView
 
 ```go
-func SafeView(encoded string) (map[string]string)
+func SafeView(encoded string) *DecodedHash
 ```
 
-Returns a map that contains the algorithm, iterations, salt and hash, however, the salt and the hash are masked with `*`.
+Returns a struct of type `DecodedHash` that contains the algorithm, iterations, salt and hash, however, the salt and the hash are masked with `*`.
 
 ```go
-// snippet of code from "github.com/saurabh0719/pHash/pHash.go"
+// snippet of code from "github.com/saurabh0719/pswHash/pswHash.go"
 
-m["algorithm"] = decoded.algorithm
-m["iterations"] = strconv.Itoa(decoded.iterations)
-m["salt"] = mask_hash(decoded.salt)
-m["hash"] = mask_hash(decoded.hash)
+safeView := &DecodedHash{
+		algorithm:  decoded.algorithm,
+		iterations: decoded.iterations,
+		salt:       maskHash(decoded.salt),
+		hash:       maskHash(decoded.hash),
+	}
 
 ```
 
 ### 5. Salt 
 
 ```go
-func Salt(length int) []byte
+func Salt(length int) ([]byte, error)
 ```
-Returns a Salt of specific length.
+Generates and returns a random salt of the given length.
 
 <hr>
 
