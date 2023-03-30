@@ -16,9 +16,10 @@ import (
 	"crypto/subtle"
 	b64 "encoding/base64"
 	"errors"
-	"golang.org/x/crypto/pbkdf2"
 	"strconv"
 	"strings"
+
+	"golang.org/x/crypto/pbkdf2"
 )
 
 const defaultIterations int = 320000 // Default
@@ -58,10 +59,10 @@ func Salt(length int) ([]byte, error) {
 	_, err := rand.Read(salt[:])
 
 	if err != nil {
-		return nil, errors.New("Error generating a random salt")
+		return nil, errors.New("error generating a random salt")
 	}
 
-	return salt, nil
+	return []byte(b64.StdEncoding.EncodeToString(salt)), nil
 }
 
 // Generate the encoded string for the given password and salt

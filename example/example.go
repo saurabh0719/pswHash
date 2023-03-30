@@ -1,14 +1,13 @@
-package main 
+package main
 
 import (
 	"fmt"
-	"github.com/saurabh0719/pswHash"
+
+	"github.com/tdeni/pswHash"
 )
 
 // Example code
-
 func main() {
-
 	str := pswHash.Encode("somerandompassword", []byte("somerandomsalt"), 216000)
 
 	fmt.Println(str)
@@ -19,6 +18,4 @@ func main() {
 
 	fmt.Println(pswHash.Verify("somerandompassword", str))
 	// true
-
 }
-

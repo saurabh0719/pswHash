@@ -3,7 +3,7 @@
 `pswHash` is a simple Go password hashing module. This module uses the `pbkdf2` algorithm along with a `sha256` digest. It is a one-way hash.
 
 ```sh
-$ go get github.com/saurabh0719/pswHash
+$ go get github.com/tdeni/pswHash
 ```
 
 <div>
